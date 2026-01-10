@@ -5,17 +5,38 @@ namespace App\Traits;
 
 trait ApiResponse
 {
-    public function SendResponse($code=200 , $message= null , $data= null)
+
+
+    public function success($message= 'success' , $data= null ,$meta = null , $code=200 )
     {
 
-     $response=[
-
-            'status'=>$code,
-            'message'=>$message,
+     $response = [
+        
+        'status' => true,
+         'message'=>$message,
             'data'=>$data,
+            'meta'=>$meta,
 
 
         ];
+
+        
+        return response()->json($response,$code);
+
+
+    }
+
+
+     public function fail($message= 'error' , $data= null ,  $code=400 )
+    {
+
+     $response = [
+        
+        'status' => false,
+         'message'=>$message,
+        ];
+
+        
 
         return response()->json($response,$code);
 

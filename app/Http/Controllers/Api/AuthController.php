@@ -7,8 +7,8 @@ use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
-use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
+use App\Services\AuthService;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -16,20 +16,20 @@ class AuthController extends Controller
 
 use ApiResponse;
 
-public function  register(RegisterRequest $request){
+
+    
+    public function __construct(private AuthService $authService)
+    {
+    }
+
+
+    public function  register(RegisterRequest $request){
 
         $data=$request->validated();
 
-        $user=User::create([
-
-        'name'=>$data['name'],
-        'email'=>$data['email'],
-        'password'=>Hash::make($data['password'])
-
-        ]);
+      $user = $this->authService->register($data);   
 
         return $this->SendResponse(201,'User Created Successfuly',['user'=>$user]);
-
 
 }
 
@@ -44,11 +44,13 @@ public function login(LoginRequest $request){
 
     }
 
-    $user=User::where('email',$request->email)->FirstOrFail();
+    
+
+    $user=User::where('email',$request->email)->firstOrFail();
 
     $token=$user->createToken('Api_Token')->plainTextToken;
 
-        return $this->SendResponse(200,'Logged in successfully',
+        return $this->sendResponse(200,'Logged in successfully',
 
         [
             'User'=>$user,
