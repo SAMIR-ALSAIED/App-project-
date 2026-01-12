@@ -11,7 +11,8 @@ use App\Http\Traits\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResourse;
 use App\Http\Requests\Admin\CategoryRequest;
-
+use App\Services\CategoriesService;
+use PHPUnit\Framework\Constraint\IsEmpty;
 
 class CategoryController extends Controller
 {
@@ -20,19 +21,25 @@ class CategoryController extends Controller
 
  use ApiResponse;
 
+ public $CategoriesService;
+
+ public function __construct(CategoriesService $CategoriesService)
+ {
+
+$this->CategoriesService=$CategoriesService;
+
+ }
+
     public function index(){
 
-       $categories=category::all();
 
-       $data=CategoryResourse::collection($categories);
+    $categories= $this->CategoriesService->getCategories();
 
-       if($categories->isEmpty()){
+        if ($categories->count() == 0) {
+        return $this->error('Categories data Not Found', [], 400);
+    }
 
-        return $this->error('Categories data Not Found',[] ,400);
-
-       }
-
-        return $this->success('Categories data successfully',CategoryResourse::collection($data),200);
+        return $this->success('Categories data successfully',CategoryResourse::collection($categories),200);
 
 
 
@@ -43,14 +50,14 @@ class CategoryController extends Controller
         $validated= $request->validated();
 
 
-   if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('categories', $imageName, 'public');
-            $validated['image'] = 'storage/categories/' . $imageName;
-        }
 
         $category = Category::create($validated);
+
+    if ($request->hasFile('image')) {
+    $category->addMediaFromRequest('image')->toMediaCollection('categories');
+
+    }
+
 
         return $this->success('Category created successfully', new CategoryResourse($category), 201);
 
@@ -64,9 +71,8 @@ class CategoryController extends Controller
         return $this->error('Category not found', [], 404);
     }
 
-    if ($category->image && file_exists(storage_path('app/public/' . $category->image))) {
-        unlink(storage_path('app/public/' . $category->image));
-    }
+    $category->clearMediaCollection('categories');
+
 
     $category->delete();
 

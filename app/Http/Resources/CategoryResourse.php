@@ -17,7 +17,7 @@ class CategoryResourse extends JsonResource
         return [
             'Id'=>$this->id,
             'Name'=>$this->name,
-            'Image'=>$this->image
+              'Image' => $this->getFirstMediaUrl('categories'),
         ];
     }
 }

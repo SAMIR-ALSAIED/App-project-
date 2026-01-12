@@ -18,17 +18,15 @@ class ProductController extends Controller
     public function index(){
 
 
-       $products=Product::all();
-
-   $data=ProductResource::collection($products);
+       $products=Product::paginate(4);
 
 
-          if($products->isEmpty()){
+          if($products->count() == 0){
 
         return $this->error('products data Not Found',[] ,400);
 
        }
-        return $this->success('products data successfully',ProductResource::collection($data),200);
+        return $this->success('products data successfully',ProductResource::collection($products),200);
 
 
     }
@@ -39,15 +37,14 @@ public function store(ProductRequest $request){
         $validated= $request->validated();
 
 
-            if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('products', $imageName, 'public');
-            $validated['image'] = 'storage/products/' . $imageName;
-        }
-
-
         $product = Product::create($validated);
+
+         if ($request->hasFile('image')) {
+    $product->addMediaFromRequest('image')->toMediaCollection('products');
+
+    }
+
+
 
 
         return $this->success('Product created successfully',new ProductResource($product),201);
@@ -72,17 +69,8 @@ public function update(ProductRequest $request, $id)
 
     if ($request->hasFile('image')) {
 
-            if ($product->image && Storage::disk('public')->exists(str_replace('storage/', '', $product->image))) {
-            Storage::disk('public')->delete(
-                str_replace('storage/', '', $product->image)
-            );
-        }
-
-        $image = $request->file('image');
-        $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
-        $image->storeAs('products', $imageName, 'public');
-
-        $validated['image'] = 'storage/products/' . $imageName;
+             $product->clearMediaCollection('products');
+          $product->addMediaFromRequest('image')->toMediaCollection('products');
     }
 
     $product->update($validated);
@@ -102,10 +90,8 @@ public function  destroy($id){
     if (!$product) {
         return $this->error('Product not found', [], 404);
     }
+    $product->clearMediaCollection('products');
 
-    if ($product->image && Storage::disk('public')->exists($product->image)) {
-        Storage::disk('public')->delete($product->image);
-    }
 
     $product->delete();
 

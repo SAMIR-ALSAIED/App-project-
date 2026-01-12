@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 12, 2026 at 11:32 AM
+-- Generation Time: Jan 12, 2026 at 09:26 PM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.26
 
@@ -64,12 +64,10 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `image`, `created_at`, `updated_at`) VALUES
-(35, 'موبايلات', 'categories/mobile.png', '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
-(36, 'إكسسوارات الموبايل', 'categories/accessories.png', '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
-(37, 'لابتوبات', 'categories/laptop.png', '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
-(38, 'سماعات وصوتيات', 'categories/audio.png', '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
-(39, 'كاميرات', 'categories/camera.png', '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
-(40, 'أجهزة منزلية', 'categories/home_appliances.png', '2026-01-12 09:28:59', '2026-01-12 09:28:59');
+(1, 'موبايلات', NULL, '2026-01-12 19:06:14', '2026-01-12 19:06:14'),
+(2, 'لابتوبات', NULL, '2026-01-12 19:06:27', '2026-01-12 19:06:27'),
+(3, 'إكسسوارات الموبايل', NULL, '2026-01-12 19:06:40', '2026-01-12 19:06:40'),
+(5, 'اكسوارت كمبيوتر', NULL, '2026-01-12 19:22:38', '2026-01-12 19:22:38');
 
 -- --------------------------------------------------------
 
@@ -125,6 +123,48 @@ CREATE TABLE `job_batches` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `media`
+--
+
+CREATE TABLE `media` (
+  `id` bigint UNSIGNED NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint UNSIGNED NOT NULL,
+  `uuid` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `collection_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mime_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `disk` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `conversions_disk` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `size` bigint UNSIGNED NOT NULL,
+  `manipulations` json NOT NULL,
+  `custom_properties` json NOT NULL,
+  `generated_conversions` json NOT NULL,
+  `responsive_images` json NOT NULL,
+  `order_column` int UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `media`
+--
+
+INSERT INTO `media` (`id`, `model_type`, `model_id`, `uuid`, `collection_name`, `name`, `file_name`, `mime_type`, `disk`, `conversions_disk`, `size`, `manipulations`, `custom_properties`, `generated_conversions`, `responsive_images`, `order_column`, `created_at`, `updated_at`) VALUES
+(1, 'App\\Models\\Product', 1, 'a48d06f3-ea21-4ede-ac56-b5ef79c459e7', 'products', '635407_main', '635407_main.jpg', 'image/jpeg', 'media', 'media', 192048, '[]', '[]', '[]', '[]', 1, '2026-01-12 19:09:03', '2026-01-12 19:09:03'),
+(2, 'App\\Models\\Product', 2, '46724718-fb08-4d93-bc08-cb1f0a06eeae', 'products', '624571_main', '624571_main.jpg', 'image/jpeg', 'media', 'media', 181009, '[]', '[]', '[]', '[]', 1, '2026-01-12 19:09:48', '2026-01-12 19:09:48'),
+(3, 'App\\Models\\Product', 3, 'dfc35301-1808-4790-a4b5-7cb229cc4485', 'products', '621274_main', '621274_main.jpg', 'image/jpeg', 'media', 'media', 63696, '[]', '[]', '[]', '[]', 1, '2026-01-12 19:10:56', '2026-01-12 19:10:56'),
+(5, 'App\\Models\\Product', 5, '98db584a-2f0b-4356-af8e-8c610fb30787', 'products', '5', '5.jpg', 'image/jpeg', 'media', 'media', 9605, '[]', '[]', '[]', '[]', 1, '2026-01-12 19:13:40', '2026-01-12 19:13:40'),
+(6, 'App\\Models\\Product', 6, '79018240-19da-4cc5-8149-e846085cb985', 'products', '5', '5.jpg', 'image/jpeg', 'media', 'media', 8807, '[]', '[]', '[]', '[]', 1, '2026-01-12 19:20:40', '2026-01-12 19:20:40'),
+(7, 'App\\Models\\Product', 7, 'eb77689a-7c11-45f2-8fdb-144e7cc86602', 'products', '51sfAk+pcQL._AC_SX300_SY300_', '51sfAk+pcQL._AC_SX300_SY300_.jpg', 'image/jpeg', 'media', 'media', 13088, '[]', '[]', '[]', '[]', 1, '2026-01-12 19:21:31', '2026-01-12 19:21:31'),
+(8, 'App\\Models\\Product', 8, '548e0944-da98-4fa2-9c5a-4c98528b96c6', 'products', '61Mk3YqYHpL._AC_UL600_SR600,400_', '61Mk3YqYHpL._AC_UL600_SR600,400_.jpg', 'image/jpeg', 'media', 'media', 21148, '[]', '[]', '[]', '[]', 1, '2026-01-12 19:23:28', '2026-01-12 19:23:28'),
+(9, 'App\\Models\\Product', 9, '175aab58-0345-4622-a53b-da6701f00d50', 'products', '6', '6.jpg', 'image/jpeg', 'media', 'media', 9857, '[]', '[]', '[]', '[]', 1, '2026-01-12 19:24:03', '2026-01-12 19:24:03'),
+(10, 'App\\Models\\Product', 10, '6e124861-7a16-4d90-b7d4-110d6b4de79c', 'products', '51GF0ckdjiL._AC_UL320_', '51GF0ckdjiL._AC_UL320_.jpg', 'image/jpeg', 'media', 'media', 11479, '[]', '[]', '[]', '[]', 1, '2026-01-12 19:24:53', '2026-01-12 19:24:53');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -144,7 +184,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (3, '0001_01_01_000002_create_jobs_table', 1),
 (4, '2026_01_10_012340_create_personal_access_tokens_table', 1),
 (5, '2026_01_10_211943_create_categories_table', 1),
-(6, '2026_01_10_212001_create_products_table', 1);
+(6, '2026_01_10_212001_create_products_table', 1),
+(7, '2026_01_12_181111_create_media_table', 1);
 
 -- --------------------------------------------------------
 
@@ -199,16 +240,15 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `price`, `image`, `description`, `category_id`, `created_at`, `updated_at`) VALUES
-(1, 'Samsung Galaxy A15', 7200, 'products/mobile1.png', 'موبايل سامسونج A15 بشاشة 6.6 بوصة، كاميرا 50MP، بطارية 5000mAh.', 35, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
-(2, 'Samsung Galaxy A25', 8900, 'products/mobile2.png', 'هاتف Samsung Galaxy A25 بمعالج قوي، شاشة 6.5 بوصة، بطارية تدوم طوال اليوم.', 35, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
-(3, 'iPhone 11', 16000, 'products/mobile3.png', 'هاتف iPhone 11 بشاشة Liquid Retina 6.1 بوصة، كاميرا مزدوجة، أداء ممتاز.', 35, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
-(4, 'iPhone 13', 24000, 'products/mobile4.png', 'iPhone 13 بشريحة A15 Bionic، شاشة Super Retina XDR، كاميرا مزدوجة مذهلة.', 35, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
-(5, 'شاحن سامسونج أصلي 25W', 450, 'products/charger.png', 'شاحن سريع أصلي من سامسونج، يوفر شحن آمن وسريع لهاتفك.', 36, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
-(6, 'سماعة بلوتوث JBL GO 3', 1800, 'products/speaker.png', 'سماعة محمولة صغيرة الحجم، صوت نقي وقوي، مقاومة للماء.', 36, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
-(7, 'باور بانك Anker 20000mAh', 2200, 'products/powerbank.png', 'بطارية متنقلة بسعة كبيرة 20000mAh لشحن جميع أجهزتك بسرعة.', 36, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
-(8, 'Dell Latitude 5400', 14500, 'products/laptop1.png', 'لابتوب Dell Latitude 5400 بأداء قوي، شاشة 14 بوصة، مثالي للشغل والدراسة.', 37, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
-(9, 'HP 15s', 17000, 'products/laptop2.png', 'لابتوب HP 15s بمعالج حديث، رام 8GB، شاشة 15.6 بوصة، مناسب لجميع الاستخدامات.', 37, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
-(10, 'Lenovo ThinkPad T480', 15500, 'products/laptop3.png', 'لابتوب Lenovo ThinkPad T480 بجودة عالية، تصميم متين، وأداء ممتاز للعمل اليومي.', 37, '2026-01-12 09:28:59', '2026-01-12 09:28:59');
+(1, 'Xiaomi Redmi Note 12', 9000, 'C:\\Users\\SAMIR2025\\AppData\\Local\\Temp\\php2C03.tmp', 'موبايل Xiaomi Redmi Note 12 بشاشة 6.67 بوصة، كاميرا 48MP، بطارية 5000mAh', 1, '2026-01-12 19:09:03', '2026-01-12 19:09:03'),
+(2, 'Samsung Galaxy M13', 5500, 'C:\\Users\\SAMIR2025\\AppData\\Local\\Temp\\phpD786.tmp', 'هاتف Samsung M13 مع كاميرا ثلاثية 50MP، بطارية 5000mAh، شاشة FHD+.', 1, '2026-01-12 19:09:47', '2026-01-12 19:09:47'),
+(3, 'Boat Rockerz 255', 200, 'C:\\Users\\SAMIR2025\\AppData\\Local\\Temp\\phpE50F.tmp', 'سماعة بلوتوث', 3, '2026-01-12 19:10:56', '2026-01-12 19:10:56'),
+(5, 'سماعات', 250, 'C:\\Users\\SAMIR2025\\AppData\\Local\\Temp\\php636F.tmp', 'سماعات', 3, '2026-01-12 19:13:40', '2026-01-12 19:13:40'),
+(6, 'Dell Latitude 5400', 14500, 'C:\\Users\\SAMIR2025\\AppData\\Local\\Temp\\phpCB74.tmp', 'لابتوب Dell Latitude 5400', 2, '2026-01-12 19:20:39', '2026-01-12 19:20:39'),
+(7, 'HP 15s', 17000, 'C:\\Users\\SAMIR2025\\AppData\\Local\\Temp\\php92EB.tmp', 'لابتوب HP 15s بمعالج حديث، رام 8GB', 2, '2026-01-12 19:21:31', '2026-01-12 19:21:31'),
+(8, 'Gaming Mouse', 250, 'C:\\Users\\SAMIR2025\\AppData\\Local\\Temp\\php5C33.tmp', 'Gaming Mouse', 5, '2026-01-12 19:23:28', '2026-01-12 19:23:28'),
+(9, 'Mechanical Keyboard', 400, 'C:\\Users\\SAMIR2025\\AppData\\Local\\Temp\\phpE829.tmp', 'Keyboard', 5, '2026-01-12 19:24:03', '2026-01-12 19:24:03'),
+(10, 'Bluetooth Speaker', 185, 'C:\\Users\\SAMIR2025\\AppData\\Local\\Temp\\phpAACE.tmp', 'Bluetooth Speaker', 5, '2026-01-12 19:24:53', '2026-01-12 19:24:53');
 
 -- --------------------------------------------------------
 
@@ -241,13 +281,6 @@ CREATE TABLE `users` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 'samir', 'samir@gamil.com', NULL, '$2y$12$ah3SGJMWMmalCnKFff0g3OSfJbQwUpibmxiERsvvqOhYeqIVi0Kju', NULL, '2026-01-12 09:30:05', '2026-01-12 09:30:05');
 
 --
 -- Indexes for dumped tables
@@ -290,6 +323,15 @@ ALTER TABLE `jobs`
 --
 ALTER TABLE `job_batches`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `media`
+--
+ALTER TABLE `media`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `media_uuid_unique` (`uuid`),
+  ADD KEY `media_model_type_model_id_index` (`model_type`,`model_id`),
+  ADD KEY `media_order_column_index` (`order_column`);
 
 --
 -- Indexes for table `migrations`
@@ -342,7 +384,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -357,16 +399,22 @@ ALTER TABLE `jobs`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `media`
+--
+ALTER TABLE `media`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -378,7 +426,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

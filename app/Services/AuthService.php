@@ -1,4 +1,4 @@
-<?php 
+<!-- <?php
 
 namespace App\Services;
 
@@ -12,7 +12,7 @@ public function register($data)
 {
     $user=  User::create([
 
-        'name'=>$data['name'], 
+        'name'=>$data['name'],
         'email'=>$data['email'],
         'password'=>$data['password']
 

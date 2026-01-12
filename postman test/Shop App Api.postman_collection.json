@@ -141,14 +141,26 @@
 					"name": "Get All Categories",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{url}}/categories",
+							"raw": "{{url}}/categories?page=1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"categories"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -251,12 +263,18 @@
 							]
 						},
 						"url": {
-							"raw": "{{url}}/products",
+							"raw": "{{url}}/products?page=1",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
 							]
 						}
 					},
