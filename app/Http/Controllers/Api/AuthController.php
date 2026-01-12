@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
-use App\Traits\ApiResponse;
+use App\Http\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
-use App\Services\AuthService;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -16,48 +16,46 @@ class AuthController extends Controller
 
 use ApiResponse;
 
-
-    
-    public function __construct(private AuthService $authService)
-    {
-    }
-
-
-    public function  register(RegisterRequest $request){
+public function  register(RegisterRequest $request){
 
         $data=$request->validated();
 
-      $user = $this->authService->register($data);   
+        $user=User::create([
 
-        return $this->SendResponse(201,'User Created Successfuly',['user'=>$user]);
+        'name'=>$data['name'],
+        'email'=>$data['email'],
+        'password'=>Hash::make($data['password'])
+
+        ]);
+
+        return $this->success('User Created Successfuly',['user'=>$user] ,201);
+
 
 }
 
 
 public function login(LoginRequest $request){
 
-    // $data=$request->validated();
+
     $credentials = $request->only('email', 'password');
     if(!Auth::attempt($credentials)){
 
-      return $this->SendResponse(401,'invalid email or password');
+      return $this->error('invalid email or password',[], 400);
 
     }
 
-    
-
-    $user=User::where('email',$request->email)->firstOrFail();
+    $user=Auth::user();
 
     $token=$user->createToken('Api_Token')->plainTextToken;
 
-        return $this->sendResponse(200,'Logged in successfully',
+        return $this->success('Logged in successfully',
 
         [
-            'User'=>$user,
-            'Token'=>$token
-        ]
+            'user'=>$user,
+            'token'=>$token
 
-        );
+
+          ],200);
 
 
 
@@ -70,7 +68,7 @@ public function logout(Request $request){
      $request->user()->currentAccessToken()->delete();
 
 
-      return $this->SendResponse(200,'Logged out successfully');
+      return $this->success('Logged out successfully',[],200);
 
 }
 

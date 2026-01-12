@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 10, 2026 at 01:56 PM
+-- Generation Time: Jan 12, 2026 at 11:32 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.26
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `shopapp_api2026`
+-- Database: `shopapp_api`
 --
 
 -- --------------------------------------------------------
@@ -44,6 +44,32 @@ CREATE TABLE `cache_locks` (
   `owner` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `expiration` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categories`
+--
+
+CREATE TABLE `categories` (
+  `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `image`, `created_at`, `updated_at`) VALUES
+(35, 'موبايلات', 'categories/mobile.png', '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
+(36, 'إكسسوارات الموبايل', 'categories/accessories.png', '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
+(37, 'لابتوبات', 'categories/laptop.png', '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
+(38, 'سماعات وصوتيات', 'categories/audio.png', '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
+(39, 'كاميرات', 'categories/camera.png', '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
+(40, 'أجهزة منزلية', 'categories/home_appliances.png', '2026-01-12 09:28:59', '2026-01-12 09:28:59');
 
 -- --------------------------------------------------------
 
@@ -116,8 +142,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '0001_01_01_000000_create_users_table', 1),
 (2, '0001_01_01_000001_create_cache_table', 1),
 (3, '0001_01_01_000002_create_jobs_table', 1),
-(4, '2026_01_10_011600_create_personal_access_tokens_table', 1),
-(5, '2026_01_10_012039_create_products_table', 1);
+(4, '2026_01_10_012340_create_personal_access_tokens_table', 1),
+(5, '2026_01_10_211943_create_categories_table', 1),
+(6, '2026_01_10_212001_create_products_table', 1);
 
 -- --------------------------------------------------------
 
@@ -150,18 +177,6 @@ CREATE TABLE `personal_access_tokens` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data for table `personal_access_tokens`
---
-
-INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `expires_at`, `created_at`, `updated_at`) VALUES
-(1, 'App\\Models\\User', 1, 'Api_Token', '6586e00696343abf8b4f07fdbd5de0adca68444c80a0bdcb4b78a6c4f26836e2', '[\"*\"]', NULL, NULL, '2026-01-10 10:35:58', '2026-01-10 10:35:58'),
-(2, 'App\\Models\\User', 2, 'Api_Token', '7a4cf50fb5871890a7214ae8e263cc0de22a19cc3ea85c096b4322846ac14ec7', '[\"*\"]', NULL, NULL, '2026-01-10 10:37:14', '2026-01-10 10:37:14'),
-(3, 'App\\Models\\User', 2, 'Api_Token', '1702cb651de29324c4ec87c46a979ab22de5a2b0a2de48262f758280719c1360', '[\"*\"]', NULL, NULL, '2026-01-10 10:38:22', '2026-01-10 10:38:22'),
-(4, 'App\\Models\\User', 2, 'Api_Token', '0329152cf187ca5914eba6a30841ca3537cef411ded0b84deee42e2f8b0e4e9c', '[\"*\"]', '2026-01-10 10:55:57', NULL, '2026-01-10 10:38:36', '2026-01-10 10:55:57'),
-(5, 'App\\Models\\User', 2, 'Api_Token', 'e21c5784222aa0474718bc892ee4ef0274e62de227affe1fa166d85c008e3c2c', '[\"*\"]', NULL, NULL, '2026-01-10 11:03:03', '2026-01-10 11:03:03'),
-(6, 'App\\Models\\User', 2, 'Api_Token', '0de207d2bc04d676c39adaee8f40d5303bc0ecc81821e2d6d87bf76124cae9f8', '[\"*\"]', NULL, NULL, '2026-01-10 11:05:55', '2026-01-10 11:05:55');
-
 -- --------------------------------------------------------
 
 --
@@ -170,9 +185,30 @@ INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `n
 
 CREATE TABLE `products` (
   `id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` int NOT NULL,
+  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `category_id` bigint UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `name`, `price`, `image`, `description`, `category_id`, `created_at`, `updated_at`) VALUES
+(1, 'Samsung Galaxy A15', 7200, 'products/mobile1.png', 'موبايل سامسونج A15 بشاشة 6.6 بوصة، كاميرا 50MP، بطارية 5000mAh.', 35, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
+(2, 'Samsung Galaxy A25', 8900, 'products/mobile2.png', 'هاتف Samsung Galaxy A25 بمعالج قوي، شاشة 6.5 بوصة، بطارية تدوم طوال اليوم.', 35, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
+(3, 'iPhone 11', 16000, 'products/mobile3.png', 'هاتف iPhone 11 بشاشة Liquid Retina 6.1 بوصة، كاميرا مزدوجة، أداء ممتاز.', 35, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
+(4, 'iPhone 13', 24000, 'products/mobile4.png', 'iPhone 13 بشريحة A15 Bionic، شاشة Super Retina XDR، كاميرا مزدوجة مذهلة.', 35, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
+(5, 'شاحن سامسونج أصلي 25W', 450, 'products/charger.png', 'شاحن سريع أصلي من سامسونج، يوفر شحن آمن وسريع لهاتفك.', 36, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
+(6, 'سماعة بلوتوث JBL GO 3', 1800, 'products/speaker.png', 'سماعة محمولة صغيرة الحجم، صوت نقي وقوي، مقاومة للماء.', 36, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
+(7, 'باور بانك Anker 20000mAh', 2200, 'products/powerbank.png', 'بطارية متنقلة بسعة كبيرة 20000mAh لشحن جميع أجهزتك بسرعة.', 36, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
+(8, 'Dell Latitude 5400', 14500, 'products/laptop1.png', 'لابتوب Dell Latitude 5400 بأداء قوي، شاشة 14 بوصة، مثالي للشغل والدراسة.', 37, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
+(9, 'HP 15s', 17000, 'products/laptop2.png', 'لابتوب HP 15s بمعالج حديث، رام 8GB، شاشة 15.6 بوصة، مناسب لجميع الاستخدامات.', 37, '2026-01-12 09:28:59', '2026-01-12 09:28:59'),
+(10, 'Lenovo ThinkPad T480', 15500, 'products/laptop3.png', 'لابتوب Lenovo ThinkPad T480 بجودة عالية، تصميم متين، وأداء ممتاز للعمل اليومي.', 37, '2026-01-12 09:28:59', '2026-01-12 09:28:59');
 
 -- --------------------------------------------------------
 
@@ -211,8 +247,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(3, 'samir', 'samir@gamil.com', NULL, '$2y$12$FZ64ZsUf4OjvhFAo7EJyaOAJK2c1rAAcVBGhrGKwHYLSBWmllezBy', NULL, '2026-01-10 11:09:29', '2026-01-10 11:09:29'),
-(4, 'Muhamed Ghonem', 'Muhamed@gamil.com', NULL, '$2y$12$fmGB1jozqBUMdgRDawiqyuy.jjm6Sfc.2lrdcqCZT4J0wnW20PURq', NULL, '2026-01-10 11:10:46', '2026-01-10 11:10:46');
+(2, 'samir', 'samir@gamil.com', NULL, '$2y$12$ah3SGJMWMmalCnKFff0g3OSfJbQwUpibmxiERsvvqOhYeqIVi0Kju', NULL, '2026-01-12 09:30:05', '2026-01-12 09:30:05');
 
 --
 -- Indexes for dumped tables
@@ -229,6 +264,12 @@ ALTER TABLE `cache`
 --
 ALTER TABLE `cache_locks`
   ADD PRIMARY KEY (`key`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -275,7 +316,8 @@ ALTER TABLE `personal_access_tokens`
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `products_category_id_foreign` (`category_id`);
 
 --
 -- Indexes for table `sessions`
@@ -297,6 +339,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -312,25 +360,35 @@ ALTER TABLE `jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `products`
+--
+ALTER TABLE `products`
+  ADD CONSTRAINT `products_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
